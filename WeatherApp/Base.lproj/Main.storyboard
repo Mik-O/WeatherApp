@@ -58,13 +58,12 @@
                     </view>
                     <connections>
                         <outlet property="cityLabel" destination="mag-VO-cU7" id="D5f-nO-522"/>
-                        <outlet property="getWeatherButton" destination="mM7-Zj-Kdc" id="xDM-9A-h29"/>
                         <outlet property="temperatureLabel" destination="0OW-M9-seo" id="cTq-rw-0Tp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="58" y="-2"/>
+            <point key="canvasLocation" x="-303" y="23"/>
         </scene>
     </scenes>
     <resources>
@@ -72,7 +71,7 @@
             <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemGroupedBackgroundColor">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
