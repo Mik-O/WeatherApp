@@ -44,9 +44,6 @@
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Get Weather data"/>
-                                <connections>
-                                    <action selector="getWeather:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gfd-dN-iEu"/>
-                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
