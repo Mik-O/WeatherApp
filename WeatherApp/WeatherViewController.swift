@@ -20,23 +20,27 @@ class WeatherViewController: UIViewController {
         
     }
 
-   
-
+    @IBAction func getWeather() {
+        getWeatherInNetwork()
+    }
+    
 }
 
 // MARK: - Networking
 extension WeatherViewController {
     private func getWeatherInNetwork() {
-        let urlString = "https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current=temperature_2m,wind_speed_10m&hourly=temperature_2m,relative_humidity_2m,wind_speed_10m"
+        let urlString =  "https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current_weather=true"
         guard let url = URL(string: urlString) else { return }
         let request = URLRequest(url: url)
-        let task = URLSession.shared.dataTask(with: request) { (data, responce, error) in
+        let task = URLSession.shared.dataTask(with: request) { data, _, _ in
             if let data, let weather = try? JSONDecoder().decode(WeatherData.self, from: data) {
-                self.temperatureLabel.text = "\(weather.current.temperature2M) °C"
+                DispatchQueue.main.async {
+                    self.temperatureLabel.text = "\(weather.currentWeather.temperature) °C"
+                    print("Parsed")
+                }
             } else {
                 print("Fail")
             }
-            
         }
         task.resume()
         

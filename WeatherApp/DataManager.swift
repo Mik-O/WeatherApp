@@ -11,10 +11,8 @@ struct WeatherData: Codable {
     let utcOffsetSeconds: Int
     let timezone, timezoneAbbreviation: String
     let elevation: Int
-    let currentUnits: Units
-    let current: Current
-    let hourlyUnits: Units
-    let hourly: Hourly
+    let currentWeatherUnits: CurrentWeatherUnits
+    let currentWeather: CurrentWeather
 
     enum CodingKeys: String, CodingKey {
         case latitude, longitude
@@ -23,54 +21,33 @@ struct WeatherData: Codable {
         case timezone
         case timezoneAbbreviation = "timezone_abbreviation"
         case elevation
-        case currentUnits = "current_units"
-        case current
-        case hourlyUnits = "hourly_units"
-        case hourly
+        case currentWeatherUnits = "current_weather_units"
+        case currentWeather = "current_weather"
     }
 }
 
-// MARK: - Current
-struct Current: Codable {
+// MARK: - CurrentWeather
+struct CurrentWeather: Codable {
     let time: String
     let interval: Int
-    let temperature2M, windSpeed10M: Double
+    let temperature, windspeed: Double
+    let winddirection, isDay, weathercode: Int
 
     enum CodingKeys: String, CodingKey {
-        case time, interval
-        case temperature2M = "temperature_2m"
-        case windSpeed10M = "wind_speed_10m"
+        case time, interval, temperature, windspeed, winddirection
+        case isDay = "is_day"
+        case weathercode
     }
 }
 
-// MARK: - Units
-struct Units: Codable {
-    let time: String
-    let interval: String?
-    let temperature2M, windSpeed10M: String
-    let relativeHumidity2M: String?
+// MARK: - CurrentWeatherUnits
+struct CurrentWeatherUnits: Codable {
+    let time, interval, temperature, windspeed: String
+    let winddirection, isDay, weathercode: String
 
     enum CodingKeys: String, CodingKey {
-        case time, interval
-        case temperature2M = "temperature_2m"
-        case windSpeed10M = "wind_speed_10m"
-        case relativeHumidity2M = "relative_humidity_2m"
-    }
-}
-
-// MARK: - Hourly
-struct Hourly: Codable {
-    let time: [String]
-    let temperature2M: [Double]
-    let relativeHumidity2M: [Int]
-    let windSpeed10M: [Double]
-
-    enum CodingKeys: String, CodingKey {
-        case time
-        case temperature2M = "temperature_2m"
-        case relativeHumidity2M = "relative_humidity_2m"
-        case windSpeed10M = "wind_speed_10m"
-        
-
+        case time, interval, temperature, windspeed, winddirection
+        case isDay = "is_day"
+        case weathercode
     }
 }
