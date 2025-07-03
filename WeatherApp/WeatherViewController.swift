@@ -17,18 +17,10 @@ class WeatherViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         getWeatherButton.layer.cornerRadius = 10
-        
-    }
-
-    @IBAction func getWeather() {
-        getWeatherInNetwork()
+        getWeatherButton.addTarget(self, action: #selector(didTapGetWeatherButton), for: .touchUpInside)
     }
     
-}
-
-// MARK: - Networking
-extension WeatherViewController {
-    private func getWeatherInNetwork() {
+    @objc private func didTapGetWeatherButton() {
         let urlString =  "https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current_weather=true"
         guard let url = URL(string: urlString) else { return }
         let request = URLRequest(url: url)
