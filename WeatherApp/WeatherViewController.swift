@@ -21,13 +21,14 @@ class WeatherViewController: UIViewController {
     }
     
     @objc func didTapGetWeatherButton() {
-        let urlString =  "https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current_weather=true"
+        let urlString =  "https://api.weatherapi.com/v1/current.json?key=e5d3d1af10274bc8aef142538250307&q=Novosibirsk&aqi=no"
         guard let url = URL(string: urlString) else { return }
         let request = URLRequest(url: url)
         let task = URLSession.shared.dataTask(with: request) { data, responce, error in
             if let data, let weather = try? JSONDecoder().decode(WeatherData.self, from: data) {
                 DispatchQueue.main.async {
-                    self.temperatureLabel.text = "\(weather.currentWeather.temperature) °C"
+                    self.cityLabel.text = "\(weather.location.name)"
+                    self.temperatureLabel.text = "\(weather.current.tempC) °C"
                     print("Parsed")
                 }
             } else {
