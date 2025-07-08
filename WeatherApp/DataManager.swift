@@ -6,6 +6,8 @@
 import Foundation
 
 
+import Foundation
+
 // MARK: - WeatherData
 struct WeatherData: Codable {
     let location: Location
@@ -23,14 +25,15 @@ struct Current: Codable {
     let windDegree: Int
     let windDir: String
     let pressureMB: Int
-    let pressureIn: Double
-    let precipMm, precipIn, humidity, cloud: Int
-    let feelslikeC: Double
-    let feelslikeF, windchillC, windchillF, heatindexC: Double
-    let heatindexF, dewpointC, dewpointF: Double
+    let pressureIn, precipMm: Double
+    let precipIn, humidity, cloud: Int
+    let feelslikeC, feelslikeF, windchillC, windchillF: Double
+    let heatindexC, heatindexF: Double
+    let dewpointC: Int
+    let dewpointF: Double
     let visKM, visMiles: Int
     let uv, gustMph, gustKph: Double
-    
+
     enum CodingKeys: String, CodingKey {
         case lastUpdatedEpoch = "last_updated_epoch"
         case lastUpdated = "last_updated"
@@ -76,7 +79,7 @@ struct Location: Codable {
     let tzID: String
     let localtimeEpoch: Int
     let localtime: String
-    
+
     enum CodingKeys: String, CodingKey {
         case name, region, country, lat, lon
         case tzID = "tz_id"
@@ -84,6 +87,7 @@ struct Location: Codable {
         case localtime
     }
 }
+
 
 // MARK: - Presentation Model
 struct PresentationModel {
