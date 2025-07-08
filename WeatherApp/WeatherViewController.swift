@@ -19,7 +19,7 @@ class WeatherViewController: UIViewController {
         super.viewDidLoad()
         getWeatherButton.layer.cornerRadius = 10
 //        getWeatherButton.addTarget(self, action: #selector(didTapGetWeatherButton), for: .touchUpInside)
-        DataManager.shared.fetchWeather { [weak self] weather in
+        DataManager.shared.alamoFireWeather() { [weak self] weather in
             self?.cityLabel.text = "\(weather.location)"
             self?.temperatureLabel.text = "\(weather.temperature)"
         }

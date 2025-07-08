@@ -7,6 +7,7 @@ import Foundation
 
 
 import Foundation
+import Alamofire
 
 // MARK: - WeatherData
 struct WeatherData: Codable {
@@ -131,38 +132,69 @@ class DataManager {
     
     private init() {}
     
-    func fetchWeather (completion: @escaping (PresentationModel) -> Void) {
-        
-        
-        let urlString = "https://api.weatherapi.com/v1/current.json?key=e5d3d1af10274bc8aef142538250307&q=Novosibirsk&aqi=no"
-        let url = URL(string: urlString)
-        let request = URLRequest(url: url!)
-        let task = URLSession.shared.dataTask(with: request) { data, responce, error in
-            
-            guard let data else { return }
-            
-            //            print(data.prettyPrinted)
-            
-            do {
-                let weather = try JSONDecoder().decode(WeatherData.self, from: data)
-                let moreInfo = PresentationModel(
-                    location: weather.location.name,
-                    temperature: weather.current.tempC,
-                    windSpeed: weather.current.windKph,
-                    pressure: weather.current.pressureIn,
-                    condition: weather.current.condition
-                )
-                DispatchQueue.main.async {
-                    self.presentationModel = moreInfo
-                    completion(moreInfo)
+    
+//    func fetchWeather (completion: @escaping (PresentationModel) -> Void) {
+//       
+//        let urlString = "https://api.weatherapi.com/v1/current.json?key=e5d3d1af10274bc8aef142538250307&q=Novosibirsk&aqi=no"
+//        let url = URL(string: urlString)
+//        let request = URLRequest(url: url!)
+//        let task = URLSession.shared.dataTask(with: request) { data, responce, error in
+//            
+//            guard let data else { return }
+//            
+//            //            print(data.prettyPrinted)
+//            
+//            do {
+//                let weather = try JSONDecoder().decode(WeatherData.self, from: data)
+//                let moreInfo = PresentationModel(
+//                    location: weather.location.name,
+//                    temperature: weather.current.tempC,
+//                    windSpeed: weather.current.windKph,
+//                    pressure: weather.current.pressureIn,
+//                    condition: weather.current.condition
+//                )
+//                DispatchQueue.main.async {
+//                    self.presentationModel = moreInfo
+//                    completion(moreInfo)
+//                }
+//            } catch {
+//                print(error)
+//                print(error.localizedDescription)
+//            }
+//            
+//        }
+//        task.resume()
+//        
+//    }
+    
+    func alamoFireWeather() {
+        AF.request("https://api.weatherapi.com/v1/current.json?key=e5d3d1af10274bc8aef142538250307&q=Novosibirsk&aqi=no")
+            .validate()
+            .responseJSON { responseData in
+                switch responseData.result {
+                case .success(let value):
+                    guard let weatherData = value as? [String: Any] else { return }
+                    
+                    for weather in weatherData {
+                        let moreInfo = PresentationModel(
+                                            location: weatherData["location"] as? String ?? "",
+                                            temperature: weatherData["temp_c"] as? Double ?? 0,
+                                            windSpeed: weatherData["wind_kph"] as? Double ?? 0,
+                                            pressure: weatherData["pressure_mb"] as? Double ?? 0,
+                                            condition: weatherData["condition"] as? ((String : String), (String : String)) ?? 
+                                        )
+                                        DispatchQueue.main.async {
+                                            self.presentationModel = moreInfo
+                                            completion(moreInfo)
+                                            )
+                        
+                    }
+                        
+                    case .failure(let error):
+                        print(error)
+                    
                 }
-            } catch {
-                print(error)
-                print(error.localizedDescription)
             }
-            
-        }
-        task.resume()
         
     }
 }
